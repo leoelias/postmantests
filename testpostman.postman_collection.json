@@ -1,0 +1,281 @@
+{
+	"info": {
+		"_postman_id": "db01aceb-d801-fe89-f989-6bd640c6cc68",
+		"name": "testpostman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "testpostman",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setGlobalVariable(\"name\", \"leonardo\");",
+							"postman.setGlobalVariable(\"email\", \"leo.email@mail.com\");",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Body matches string\"] = responseBody.has(\"leonardo\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"email\": \"{{email}}\",\n        \"name\": \"{{name}}\"\n}"
+				},
+				"url": {
+					"raw": "http://httpbin.org/post",
+					"protocol": "http",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://httpbin.org/post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "855243bf-f043-474a-af45-89837905e633",
+						"exec": [
+							"postman.setGlobalVariable(\"name\", \"leonardo\");",
+							"postman.setGlobalVariable(\"email\", \"leo.email@mail.com\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "207668d8-a889-4348-8cf2-5e2308413e64",
+						"exec": [
+							"console.log(JSON.responseBody);",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"//var opp1 = jsonData.json[4];",
+							"console.log(jsonData.json.email);",
+							"tests[\"Check Email\"] = jsonData.json.email === \"leo.email@mail.com\";",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"email\": \"{{email}}\",\n        \"name\": \"{{name}}\"\n}"
+				},
+				"url": {
+					"raw": "http://httpbin.org/post",
+					"protocol": "http",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://httpbin.org/post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "855243bf-f043-474a-af45-89837905e633",
+						"exec": [
+							"postman.setGlobalVariable(\"firstname\", \"leonardo\");",
+							"postman.setGlobalVariable(\"lastname\", \"elias\");",
+							"postman.setGlobalVariable(\"email\", \"leo.email@mail.com\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "207668d8-a889-4348-8cf2-5e2308413e64",
+						"exec": [
+							"console.log(JSON.responseBody);",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"//tests[\"Check Email\"] = jsonData.json.email === \"leo.email@mail.com\";",
+							"//tests[\"Check FirtName\"] = jsonData.json.firstname === \"leonardo\";",
+							"//tests[\"Check LastName\"] = jsonData.json.lastname === \"elias\";",
+							"",
+							"",
+							"pm.test(\"Email is leo.email@mail.com\", function(){",
+							"   pm.expect(jsonData.json.email).to.be.equal(\"leo.email@mail.com\") ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"firstname\": \"{{firstname}}\",\n        \"lastname\": \"{{lastname}}\",\n        \"email\": \"{{email}}\"\n        \n}"
+				},
+				"url": {
+					"raw": "http://httpbin.org/post",
+					"protocol": "http",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Response Time",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "05cd5410-86f6-449c-a8cd-79934768131b",
+						"exec": [
+							"//console.log(responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"console.log(data.headers.host);",
+							"pm.test(\"Host is postman.echo.com\", function(){",
+							"  pm.expect(data.headers.host).to.equal(\"postman-echo.com\");",
+							"});",
+							"",
+							"pm.test(\"URL is https://postman-echo.com/get\", function(){",
+							"   pm.expect(data.url).to.equal(\"https://postman-echo.com/get\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://postman-echo.com/get",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Json for",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fba700b3-ddc8-423d-ac40-8281414b15bb",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"pm.test(\"Title is properly displayed\", function(){",
+							"for(i=0;i<response.length;i++){",
+							"if (response[i].id === 1){",
+							"pm.expect(response[i].title).to.equals(\"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\")",
+							"}",
+							"if (response[i].id === 71){",
+							"pm.expect(response[i].title).to.equals(\"et iusto veniam et illum aut fuga\")",
+							"}",
+							"",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/:id",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
