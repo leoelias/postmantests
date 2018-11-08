@@ -138,7 +138,7 @@
 							"",
 							"",
 							"pm.test(\"Email is leo.email@mail.com\", function(){",
-							"   pm.expect(jsonData.json.email).to.be.equal(\"leo.email@mail.com\") ",
+							"   pm.expect(jsonData.json.email).to.be.equal(\"leo.email@mrail.com\") ",
 							"});"
 						],
 						"type": "text/javascript"
