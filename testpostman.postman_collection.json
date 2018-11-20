@@ -14,7 +14,7 @@
 						"type": "text/javascript",
 						"exec": [
 							"postman.setGlobalVariable(\"name\", \"leonardo\");",
-							"postman.setGlobalVariable(\"email\", \"leo.email@mail.com\");",
+							"postman.setGlobalVariable(\"email\", \"leo.email@tmail.com\");",
 							""
 						]
 					}
